@@ -65,6 +65,8 @@ Tauri bundles platform-specific installers for the host OS:
 - Windows: `.msi` or `.exe`
 - Linux: `.deb`, `.rpm`, or AppImage depending on local tooling
 
+macOS builds currently use ad-hoc signing so GitHub Actions artifacts can be opened on Apple Silicon machines without showing a damaged-app error. If you add an Apple Developer certificate later, you can switch to full signing and notarization.
+
 ## GitHub Actions
 
 The repository includes a workflow in `.github/workflows/build.yml` that builds installers on:
