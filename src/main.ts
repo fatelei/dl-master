@@ -1165,9 +1165,25 @@ window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", () 
 });
 
 async function bootstrap() {
-  await loadPersistedState();
+  render();
+  try {
+    await loadPersistedState();
+  } catch (error) {
+    console.error("Failed to load persisted state", error);
+    setNotice(`状态加载失败：${String(error)}`);
+  }
   render();
   refreshStatus().catch((error) => setNotice(`状态检测失败：${String(error)}`));
 }
+
+window.addEventListener("error", (event) => {
+  console.error(event.error ?? event.message);
+  setNotice(`应用错误：${event.message}`);
+});
+
+window.addEventListener("unhandledrejection", (event) => {
+  console.error(event.reason);
+  setNotice(`应用错误：${String(event.reason)}`);
+});
 
 void bootstrap();
